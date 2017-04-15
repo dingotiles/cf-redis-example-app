@@ -1,6 +1,7 @@
 ---
 applications:
-- name: redis-example-app
+- name: dingo-redis-example-ruby-app
   memory: 256M
   instances: 1
+  buildpack: ruby_buildpack
   path: .

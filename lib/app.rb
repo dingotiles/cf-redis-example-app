@@ -70,19 +70,21 @@ def redis_credentials
   service_name = ENV['service_name'] || "redis"
 
   if ENV['VCAP_SERVICES']
-    all_pivotal_redis_credentials = CF::App::Credentials.find_all_by_all_service_tags(['redis', 'pivotal'])
-    if all_pivotal_redis_credentials && all_pivotal_redis_credentials.first
-      all_pivotal_redis_credentials && all_pivotal_redis_credentials.first
+    all_redis_credentials = CF::App::Credentials.find_all_by_all_service_tags(['redis'])
+    if all_redis_credentials && all_redis_credentials.first
+      return all_redis_credentials && all_redis_credentials.first
     else
       redis_service_credentials = CF::App::Credentials.find_by_service_name(service_name)
-      redis_service_credentials
+      return redis_service_credentials
     end
   end
+  puts "ERROR: this application expects $VCAP_SERVICES to contain a 'redis' tagged service instance"
+  exit 1
 end
 
 def redis_client
   @client ||= Redis.new(
-    host: redis_credentials.fetch('host'),
+    host: redis_credentials['host'] || redis_credentials.fetch('hostname'),
     port: redis_credentials.fetch('port'),
     password: redis_credentials.fetch('password')
   )
