@@ -2,7 +2,7 @@
 
 This app is an example of how you can consume the Dingo Redis service within an application.
 
-This example app provides an API to end users (for example `curl` commands) to get/set/delete key value pairs. The data is stored in a Dingo Redis service instance.
+The app provides an API to end users (for example `curl` commands) to get/set/delete key value pairs. The data is stored in a Dingo Redis service instance.
 
 ## Getting Started
 
